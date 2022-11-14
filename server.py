@@ -72,7 +72,6 @@ class Server:
                 if recieved_data == "<DIS>":
                     print(f"Disconnect Request from client {socket_connection}")
                     connected = False
-
         self.clients.remove(socket_connection)
         socket_connection.close()
 
@@ -88,6 +87,7 @@ class Server:
             print("Error while sending")
     
     def process_message(self, address, recieved_data):
+        # print(f"from : {address} -> data : {recieved_data} -> size : {round(sys.getsizeof(recieved_data)*1e-3, 2)} KB") # start processing commands here
         print(f"from : {address} -> data : {recieved_data} -> size : {round(sys.getsizeof(recieved_data)*1e-3, 2)} KB") # start processing commands here
         
     def close(self):
@@ -100,5 +100,6 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, lambda signal, frame : signal_handler(signal, frame))
     print("Server Launched")
     server = Server()
+    # server = Server(ip='103.88.142.105', port=9999)
     server.start()
     server.server_thread.join()

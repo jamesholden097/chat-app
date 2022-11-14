@@ -32,7 +32,7 @@ class Client:
 
     def run(self):
         try:
-            while self.running:
+            while self.running and self.connected:
                 inp = input("Press enter send data : ")
                 self.send_data(self.socket_client, inp)
                 if inp == "<DIS>":
