@@ -13,7 +13,7 @@ class Client:
         self.port = port
         self.address = (self.ip, self.port)
         self.connect_server()
-        self.connected = False
+        self.connected = True
         self.running = True
 
     def connect_server(self):
@@ -24,7 +24,8 @@ class Client:
 
         except ConnectionRefusedError:
             print("Server Down")
-            
+            self.connected = False
+
     def start(self):
         if self.connected:
             self.client_thread = Thread(target=self.recieve_data, args=[self.socket_client])
