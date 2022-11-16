@@ -69,9 +69,9 @@ class Server:
                     self.process_message(address, recieved_data)
                     new_message = True
                     full_message = b""
-                if recieved_data == "<DIS>":
-                    print(f"Disconnect Request from client {socket_connection}")
-                    connected = False
+                    if recieved_data == "<DIS>":
+                        print(f"Disconnect Request from client {socket_connection}")
+                        connected = False
         self.clients.remove(socket_connection)
         socket_connection.close()
 
@@ -99,8 +99,8 @@ def signal_handler(signal, frame):
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, lambda signal, frame : signal_handler(signal, frame))
     print("Server Launched")
-    # server = Server()
-    server = Server(ip='103.88.142.105', port=9999)
+    server = Server()
+    # server = Server(ip='103.88.142.105', port=9999)
     # server = Server(ip='192.168.1.110', port=9999)
     server.start()
     server.server_thread.join()
