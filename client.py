@@ -9,7 +9,7 @@ from util import HEADERSIZE, data_packet, all_keys
 class Client:
     def __init__(self, ip=None, port=9999) -> None:
         if not ip:
-            self.ip = socket.gethostbyname(socket.gethostname())
+            self.ip = '119.30.32.90' # socket.gethostbyname(socket.gethostname())
         self.port = port
         self.address = (self.ip, self.port)
         self.connect_server()
