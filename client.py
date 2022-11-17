@@ -66,8 +66,10 @@ class Client:
 
                 full_message += message
                 if len(full_message) - HEADERSIZE == message_length:
+                    recieved_data = pickle.loads(full_message[HEADERSIZE:])
+
                     # print(pickle.loads(full_message[HEADERSIZE:]))
-                    self.process_message(full_message)
+                    self.process_message(recieved_data)
                     new_message = True
                     full_message = b""
                     message_length = 0

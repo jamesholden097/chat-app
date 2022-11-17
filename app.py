@@ -47,15 +47,20 @@ class App(customtkinter.CTk):
         self.create_button(self.frame_left, 'button1', 0, 0)
         self.top_label = customtkinter.CTkLabel(master=self.frame_right_top, text="Name of Contact",text_font=("Roboto Medium", -16))  
         self.top_label.grid(row=0, column=0, rowspan=2, columnspan=5,sticky="ew")
+        
         self.text_canvas = tkinter.Canvas(master=self.frame_right_top, bd = 0 ,bg="gray12", highlightthickness=1, highlightbackground="black")
         self.text_canvas.grid(row=2, column=0,  sticky="nsew")
+        
         self.canvas_scrollbar = customtkinter.CTkScrollbar(self.frame_right_top,command=self.text_canvas.yview)
         self.canvas_scrollbar.grid(row=2, column=6, rowspan=5,sticky="ns")
         self.text_canvas.configure(yscrollcommand=self.canvas_scrollbar.set)
         self.text_canvas.bind('<Configure>', self.reset_scroll_region)
+        
         self.canvas_frame = customtkinter.CTkFrame(master=self.text_canvas, fg_color='gray12')
+        
         self.text_canvas.update()
         self.text_canvas.create_window((0, 0), window=self.canvas_frame, anchor='nw', width=self.text_canvas.winfo_width())
+        
         self.canvas_frame.grid_columnconfigure(0, weight=1)
         self.canvas_frame.grid_columnconfigure(2, weight=1)
         self.canvas_frame.grid_rowconfigure(0, weight=1)
