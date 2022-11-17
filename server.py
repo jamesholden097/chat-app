@@ -66,7 +66,7 @@ class Server:
                 full_message += message
                 if len(full_message) - HEADERSIZE == message_length:
                     recieved_data = pickle.loads(full_message[HEADERSIZE:])
-                    self.send_data(socket_connection, full_message)
+                    self.send_data(socket_connection, recieved_data)
 
                     self.process_message(address, recieved_data)
                     new_message = True
