@@ -4,12 +4,12 @@ import pickle
 import socket
 import traceback
 from threading import Thread
-from util import HEADERSIZE, data_packet, all_keys
+from util import HEADERSIZE
 
 class Client:
     def __init__(self, ip=None, port=9999) -> None:
         if not ip:
-            self.ip = '119.30.32.90' # socket.gethostbyname(socket.gethostname())
+            self.ip = 'sammflynn.ddns.net'
         self.port = port
         self.address = (self.ip, self.port)
         self.connect_server()
