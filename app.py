@@ -12,10 +12,9 @@ class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("CustomTkinter complex_example.py")
+        self.title("app")
         self.geometry("1280x720")
         self.resizable(0, 0)
-
         self.protocol("WM_DELETE_WINDOW", self.on_closing)  # call .on_closing() when app gets closed
 
         self.buttons = {}

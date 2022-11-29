@@ -4,8 +4,14 @@ import signal
 import socket
 import threading
 import traceback
-
+from dataclasses import dataclass
 from util import HEADERSIZE, data_packet
+
+class User:
+    def __init__(self, socket, address):
+        self.socket = socket
+        self.address = address
+        self.name = ''
 
 class Server:
     def __init__(self, ip='0.0.0.0', port=9999) -> None:
@@ -17,6 +23,7 @@ class Server:
         self.socket_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # try except else finally
         self.socket_server.bind(self.address) # try except else finally
         self.clients = set()
+        self.users = {}
         self.running = True
 
     def start(self):
@@ -28,10 +35,12 @@ class Server:
         while self.running:
             socket_connection, address = self.socket_server.accept()  # try except else finally
             threading.Thread(target=self.handle_client, args=[socket_connection, address]).start()
-            self.clients.add(socket_connection)
-            print(f"Active Connections {threading.activeCount() - 1}")
-            print(len(self.clients))
-            print(self.clients)
+            user = User(socket_connection, address)
+            self.clients.add(user)
+            # self.send_data(user.socket, "<REGISTER>")
+            # print(f"Active Connections {threading.activeCount() - 1}")
+            # print(len(self.clients))
+            # print(self.clients)
             # self.send_data(socket_connection, "Hello, I am server.")
 
 
@@ -39,7 +48,6 @@ class Server:
     def handle_client(self, socket_connection, address):
         # print(f"client socket_connection : {socket_connection}")
         print(f"client address : {address}")
-
         connected = True
         full_message = b''
         new_message = True
@@ -71,7 +79,7 @@ class Server:
                     self.process_message(address, recieved_data)
                     new_message = True
                     full_message = b""
-                    if recieved_data == "<DIS>":
+                    if recieved_data == "<DISCONNECT>":
                         print(f"Disconnect Request from client {socket_connection}")
                         connected = False
         self.clients.remove(socket_connection)

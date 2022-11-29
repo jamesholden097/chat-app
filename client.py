@@ -1,5 +1,6 @@
 import sys
 import time
+import uuid
 import pickle
 import socket
 import traceback
@@ -15,6 +16,8 @@ class Client:
         self.connect_server()
         self.connected = True
         self.running = True
+
+        self.name = str(uuid.uuid4())[0:4]
 
     def connect_server(self):
         try:
@@ -36,7 +39,7 @@ class Client:
             while self.running and self.connected:
                 inp = input("Press enter send data : ")
                 self.send_data(self.socket_client, inp)
-                if inp == "<DIS>":
+                if inp == "<DISCONNECT>":
                     self.close()
         except KeyboardInterrupt:
             self.running = False
@@ -87,7 +90,8 @@ class Client:
             print("Error while sending")
 
     def process_message(self, recieved_data):
-        print(f" Recieved_data {recieved_data} -> size : {round(sys.getsizeof(recieved_data)*1e-3, 2)} KB") # start processing command here
+        # print(f" Recieved_data {recieved_data} -> size : {round(sys.getsizeof(recieved_data)*1e-3, 2)} KB") # start processing command here
+        print("Process")
 
     def close(self):
         self.running = False
